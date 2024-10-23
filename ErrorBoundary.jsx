@@ -1,10 +1,10 @@
 import React from "react";
-import { handleErrorBaundaryError } from "./ErrorUtils";
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
+    this.monitor = props.monitor;
   }
 
   static getDerivedStateFromError(error) {
@@ -14,7 +14,7 @@ export default class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     // prevents errors from being caught by window
     window.errorHandledByBoundary = true;
-    handleErrorBaundaryError(error);
+    this.monitor.handleErrorBoundaryError(error);
   }
 
   render() {
