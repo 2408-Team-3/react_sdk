@@ -6,8 +6,10 @@ import("source-map-support/browser-source-map-support.js").then(
 
 import axios from "axios";
 
+API_ENDPOINT = "https://jvcrh631c5.execute-api.us-east-1.amazonaws.com/dev";
+
 class ErrorMonitor {
-  static #APIendpoint = "http://localhost:8000";
+  // connecting to lambda
 
   constructor(projectID) {
     this.projectID = projectID;
@@ -31,15 +33,8 @@ class ErrorMonitor {
       timestamp: new Date().toISOString(),
       project_id: this.projectID,
     };
-    console.log("data object to be sent", data);
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/errors",
-        data
-      );
-
-      console.log("response:", response.data);
-
+      const response = await axios.post(`${API_ENDPOINT}/api/errors`, { data });
       console.log("Error sent successfully:", data);
     } catch (err) {
       console.error("Failed to send error:", err);
