@@ -23,17 +23,17 @@ class ErrorMonitor {
   // Private methods
 
   async #logError(error, handled) {
-    const data = {
-      error: {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      },
-      handled,
-      timestamp: new Date().toISOString(),
-      project_id: this.projectID,
-    };
     try {
+      const data = {
+        error: {
+          name: error.name,
+          message: error.message,
+          stack: error.stack,
+        },
+        handled,
+        timestamp: new Date().toISOString(),
+        project_id: this.projectID,
+      };
       const response = await axios.post(`${API_ENDPOINT}/api/errors`, { data });
       console.log("Error sent successfully:", data);
     } catch (err) {
